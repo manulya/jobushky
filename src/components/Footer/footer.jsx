@@ -6,7 +6,7 @@ const FooterWrapper=styled.section`
 width: 198px;
 height: 110px;
 left: 629px;
-top: 1917px;
+bottom:-300px;
 `
 const Separator=styled.div`
 position: absolute;

@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Main from "./components/main/main";
-import MainHR from "./components/mainHR/mainHR"
-import LogIn from "./components/login/login";
-import SignUp from "./components/signup/signup"
+import AppRouter from "./components/AppRouter";
+import { useSelector } from "react-redux";
+import { check } from "./http/userAPI";
+import { setIsAuthAC } from "./store/userReducer";
+import { Spinner } from "react-bootstrap";
 
 
 function App() {
+  const users=useSelector((state)=>state.users)
+  const [loading, setLoading]=useState(true)
+
+useEffect(()=>{
+  setTimeout(()=>{
+  check().then(data => {
+    users.setIsAuthAC(true)
+  }).finally(()=>setLoading(false))
+},1000)
+}, [])
+
+if(loading){
+  return <Spinner animation={"grow"}/>
+}
+
   return (
-    <Routes>
-      <Route path='/' element={<Main/>}></Route>
-      <Route path='employer' element={<MainHR/>}></Route>   
-      <Route path='login' element={<LogIn/>}></Route>   
-      <Route path='signup' element={<SignUp/>}></Route>   
-      </Routes>
-      
+     <AppRouter/>
   );
 }
 

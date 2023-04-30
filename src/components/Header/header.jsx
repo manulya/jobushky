@@ -1,107 +1,77 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../../img/logo.svg"
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { LOGIN_ROUTE, MAIN_ROUTE,ADMIN_ROUTE } from "../../utils/consts";
+import { setIsAuthAC } from "../../store/userReducer";
 
-const HeaderWrapper=styled.section`
-position: absolute;
-width: 1440px;
-height: 141px;
-left: 0px;
-top: 14px;
-`
-
-const Logo = styled.img`
-position: absolute;
-width: 297px;
-height: 78px;
-left: 44px;
-top: 29px;
-
-
-`
-const Change=styled.section`
-width: 333.75px;
-height: 15.56px;
-left: 578px;
-top: 60px;
-`
-const Soisk=styled.button`
-position: absolute;
-width: 129.3px;
-height: 15.56px;
-left: 578px;
-top: 60px;
-cursor: pointer;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 14px;
-/* or 100% */
-border: none;
-background-color: rgba(0, 125, 215, 0);
-text-align: center;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-color: #000000;
-:visited{
-  font-weight: 600;
-}
-`
-
-const Rabot = styled.button`
-position: absolute;
-width: 150.3px;
-height: 15.56px;
-left: 761.45px;
-top: 60px;
-cursor: pointer;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 14px;
-/* or 100% */
-border: none;
-background-color: rgba(0, 125, 215, 0);
-text-align: center;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-color: #000000;
-:active{
-  font-weight: 600;}
-`
-
-const Signin = styled.button`
-position: absolute;
-height: 51.11px;
-left: 85.76%;
-right: 4.11%;
-top: 42px;
-height: 51px;
-background: #001192;
-border-radius: 20px 10px;
-border: none;
-color:#D3D2F5;
-cursor: pointer;
-`
-
-    
 
 const Header=()=>{
+  
+const users=useSelector((state)=>state.users)
+const dispatch = useDispatch()
+const navigate=useNavigate()
+
+const logOut =()=>{
+  dispatch(setIsAuthAC(false))
+}
     return (
       
         <HeaderWrapper>
-        <Logo src={logo}/>
-        <Change>
-        <NavLink to='/'><Soisk>Соискателям</Soisk></NavLink>
-          <NavLink to='/employer'><Rabot>Работодателям</Rabot></NavLink>
-        </Change>
-        <NavLink to='/login'><Signin>Войти</Signin></NavLink>
+       <NavLink to={MAIN_ROUTE}> <Logo src={logo}/></NavLink>
+        {users.isAuth ?
+        <section>
+        <NavLink to={ADMIN_ROUTE}><Admin>Админ</Admin></NavLink>
+        <NavLink to={LOGIN_ROUTE}><Signin onClick={()=>logOut()}>Выйти</Signin></NavLink>
+        </section>
+        :
+        <section>
+        <Signin onClick={()=>navigate(LOGIN_ROUTE)}>Авторизация</Signin>
+        </section>
+        }
       </HeaderWrapper>
     );
 
 }
 
 export default Header;
+
+
+const HeaderWrapper=styled.section`
+display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  z-index:10;
+`
+
+const Logo = styled.img`
+ position: absolute;
+  top: 0.5%;
+  left: 5rem;
+
+`
+
+const Signin = styled.button`
+ background-color: #9c27b0;
+  background-image: linear-gradient(to bottom, #9c27b0, #7b1fa2);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-right: 0.5rem;
+  :hover {
+    background-color:  #f2eefa;
+}
+
+`
+const Admin = styled(Signin)`
+ 
+`
+
+    

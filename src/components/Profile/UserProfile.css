@@ -1,0 +1,310 @@
+.user-profile,
+.user-profile * {
+  box-sizing: border-box;
+}
+.user-profile {
+  background: var(--secondary-brand, #d9e6f7);
+  width: 1512px;
+  height: 1063px;
+  position: relative;
+  overflow: hidden;
+}
+.header {
+  width: 1512px;
+  height: 92px;
+  position: static;
+}
+.userHeader {
+  width: 191px;
+  height: 42px;
+  position: static;
+}
+.HeaderUserName {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 400 16px/24px "Roboto", sans-serif;
+  position: absolute;
+  left: 1312px;
+  top: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.foto {
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  left: 1250px;
+  top: 25px;
+}
+.logo {
+  position: absolute;
+width: 297px;
+height: 78px;
+left: 80px;
+top: 29px;
+
+}
+
+.userInfo {
+  width: 320px;
+  height: 770px;
+  position: static;
+}
+.bg {
+  background: var(--white, #fdfeff);
+  border-radius: 20px;
+  width: 320px;
+  height: 770px;
+  position: absolute;
+  left: 80px;
+  top: 131px;
+}
+
+.UserName {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 400 20px/24px "Roboto", sans-serif;
+  position: absolute;
+  left: 168px;
+  top: 390.14px;
+  width: 143px;
+  height: 37.17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar {
+  width: 172px;
+  height: 182.68px;
+  position: static;
+}
+.foto2 {
+  border-radius: 200px;
+  width: 172px;
+  height: 182.68px;
+  position: absolute;
+  left: 154px;
+  top: 162.86px;
+}
+.edit {
+  padding: 3px 0px 3px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 141px;
+  height: 74.34px;
+  position: absolute;
+  left: 171px;
+  top: 636.54px;
+}
+.button {
+  background: #e26bf5;
+  border-radius: 999px;
+  padding: 23px 32px 23px 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 141px;
+  position: relative;
+  box-shadow: 0px 5px 15px 0px rgba(37, 44, 97, 0.15),
+    0px 2px 4px 0px rgba(136, 144, 194, 0.2);
+  overflow: hidden;
+}
+.sign-up {
+  color: #162a58;
+  text-align: left;
+  font: 600 18px/100% "Roboto", sans-serif;
+  position: relative;
+}
+.chats {
+  padding: 3px 0px 3px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 141px;
+  height: 74.34px;
+  position: absolute;
+  left: 169px;
+  top: 503.79px;
+}
+.profile-infos {
+  width: 756px;
+  height: 770px;
+  position: static;
+}
+.cvbg {
+  background: var(--white, #fdfeff);
+  border-radius: 20px;
+  width: 756px;
+  height: 770px;
+  position: absolute;
+  left: 426px;
+  top: 131px;
+}
+.job {
+  color: var(--text, #4b4b4b);
+  text-align: left;
+  font: 700 18px/24px "Roboto", sans-serif;
+  position: absolute;
+  left: 487px;
+  top: 275px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.name {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 700 26px/39px "Roboto", sans-serif;
+  position: absolute;
+  left: 487px;
+  top: 205px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cv {
+  color: var(--text, #4b4b4b);
+  text-align: left;
+  font: 400 28px/24px "Roboto", sans-serif;
+  position: absolute;
+  left: 487px;
+  top: 161px;
+  width: 115px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.cvinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 487px;
+  top: 340px;
+}
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.------ {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 500 18px/24px "Roboto", sans-serif;
+  opacity: 0.5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qweqweqwe {
+  color: var(--text, #4b4b4b);
+  text-align: left;
+  font: 400 16px/24px "Roboto", sans-serif;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.education {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.----------- {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 500 18px/24px "Roboto", sans-serif;
+  opacity: 0.5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.expirience {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.fhdhdfhf {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 400 16px/24px "Roboto", sans-serif;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.lisnjashd {
+  color: #4b4b4b;
+  text-align: center;
+  font: 500 16px/24px "Roboto", sans-serif;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.-------- {
+  color: var(--text, #4b4b4b);
+  text-align: center;
+  font: 500 16px/24px "Roboto", sans-serif;
+  opacity: 0.5;
+  position: relative;
+  width: 76px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ylianadans-gmail-com {
+  color: #000000;
+  text-align: center;
+  font: 500 16px/24px "Roboto", sans-serif;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
