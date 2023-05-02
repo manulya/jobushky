@@ -4,16 +4,7 @@ import thunk from 'redux-thunk';
 import { userReducer } from './userReducer';
 import { jobReducer } from './jobReducer';
 import { companyReducer } from './companyReducer';
-
-
-// let reducers = combineReducers({
-//     catalogPage:catalogReducer
-// });
-
-// let store = createStore(reducers);
-
-// window.store=store;
-
+import { requestReducer } from './requestReducer';
 
 
 
@@ -21,6 +12,7 @@ let rootReducer=combineReducers({
 users:userReducer,
 jobs:jobReducer,
 companies:companyReducer,
+requests:requestReducer
 }
 )
 

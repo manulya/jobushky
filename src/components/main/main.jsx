@@ -4,7 +4,7 @@ import main1 from "../../img/main1.png";
 import main2 from "../../img/main2.png";
 import search from "../../img/Search.png";
 import filter from "../../img/filter.png";
-import Header from "../Header/header.jsx";
+import Header from "../header.jsx";
 import Footer from "../Footer/footer.jsx";
 import { NavLink } from "react-router-dom";
 import Search_main from "../search_main/search_main";

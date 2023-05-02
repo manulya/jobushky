@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { check } from "./http/userAPI";
 import { setIsAuthAC } from "./store/userReducer";
 import { Spinner } from "react-bootstrap";
@@ -10,13 +10,12 @@ import { Spinner } from "react-bootstrap";
 function App() {
   const users=useSelector((state)=>state.users)
   const [loading, setLoading]=useState(true)
+  const dispatch=useDispatch()
 
-useEffect(()=>{
-  setTimeout(()=>{
-  check().then(data => {
-    users.setIsAuthAC(true)
-  }).finally(()=>setLoading(false))
-},1000)
+  useEffect(() => {
+    check().then(data => {
+        dispatch(setIsAuthAC(true))
+    }).finally(() => setLoading(false))
 }, [])
 
 if(loading){

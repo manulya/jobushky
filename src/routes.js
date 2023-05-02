@@ -1,7 +1,7 @@
 import { ADMIN_ROUTE, CATALOG_ROUTE, JOB_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, REQUEST_ROUTE } from "./utils/consts"
 import {Main} from "./components/main/main"
 import { Admin } from "./components/admin"
-import { Requests } from "./components/requests"
+import Requests from "./components/requests"
 import Auth from "./components/auth"
 import Catalog from "./components/Catalog"
 import Job from "./components/job"

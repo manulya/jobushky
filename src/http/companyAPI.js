@@ -1,10 +1,15 @@
 import { fetchCompaniesAC } from "../store/companyReducer";
 import { $authHost, $host } from "./index";
 
-export const create = async(name, description, address, img)=>{
-    const {data} = await $authHost.post('/api/company/', {name, description, address, img})
-    return data
-}
+
+export const createCompany = async(formData) => {
+    const {data} = await $host.post('/api/company', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', 
+      }
+    });
+    return data;
+  }
 
 export const fetchCompanies = () => {
     return async (dispatch) => {

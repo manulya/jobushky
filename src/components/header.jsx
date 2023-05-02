@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../../img/logo.svg"
+import logo from "../img/logo.svg"
 import {NavLink, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGIN_ROUTE, MAIN_ROUTE,ADMIN_ROUTE } from "../../utils/consts";
-import { setIsAuthAC } from "../../store/userReducer";
+import { LOGIN_ROUTE, MAIN_ROUTE,ADMIN_ROUTE, REQUEST_ROUTE } from "../utils/consts";
+import { setIsAdminAC, setIsAuthAC } from "../store/userReducer";
 
 
 const Header=()=>{
@@ -15,20 +15,27 @@ const navigate=useNavigate()
 
 const logOut =()=>{
   dispatch(setIsAuthAC(false))
+  dispatch(setIsAdminAC(false))
+  localStorage.clear();
+  console.log("exit",localStorage);
 }
     return (
       
         <HeaderWrapper>
        <NavLink to={MAIN_ROUTE}> <Logo src={logo}/></NavLink>
         {users.isAuth ?
-        <section>
-        <NavLink to={ADMIN_ROUTE}><Admin>Админ</Admin></NavLink>
-        <NavLink to={LOGIN_ROUTE}><Signin onClick={()=>logOut()}>Выйти</Signin></NavLink>
-        </section>
+        (<section>
+          {users.isAdmin ?
+        (<NavLink to={ADMIN_ROUTE}><Admin>Админ</Admin></NavLink>)
         :
-        <section>
+        (<NavLink to={REQUEST_ROUTE}><Request>Заявки</Request></NavLink>)
+          }
+        <NavLink to={LOGIN_ROUTE}><Signin onClick={()=>logOut()}>Выйти</Signin></NavLink>
+        </section>)
+        :
+        (<section>
         <Signin onClick={()=>navigate(LOGIN_ROUTE)}>Авторизация</Signin>
-        </section>
+        </section>)
         }
       </HeaderWrapper>
     );
@@ -72,6 +79,8 @@ const Signin = styled.button`
 `
 const Admin = styled(Signin)`
  
+`
+const Request = styled(Admin)`
 `
 
     

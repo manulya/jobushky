@@ -1,11 +1,8 @@
 import React, { useEffect, useState} from "react";
 import styled from "styled-components";
 import Job from "./job";
-import { NavLink } from "react-router-dom";
-import { JOB_ROUTE } from "../utils/consts";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCompanies, getAllCompanies, getOneCompany } from "../http/companyAPI";
-import { fetchCompanyAC } from "../store/companyReducer";
+import {useSelector } from 'react-redux';
+import { Spinner } from "react-bootstrap";
 
 const Vacancy = (props) => {
   const {id,name, description, salary, city, companyid}=props.vacancy
@@ -13,11 +10,13 @@ const Vacancy = (props) => {
   const [popUp, setPopUp] = useState(false);
   const companies=useSelector((state)=>state.companies.companies);
   const company = companies.filter((c)=>c.id===companyid)
-  const dispatch = useDispatch();
  
   const clickHandler = () => {
     setPopUp(!popUp);
   };
+  if(!companies || companies.length === 0 || !company || company.length === 0){
+   return <Spinner/>
+      }
 
   return (
     <VacancyContainer>

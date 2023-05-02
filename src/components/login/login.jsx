@@ -9,7 +9,7 @@ import google from "../../img/google.svg";
 import { CATALOG_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
 import { login } from "../../http/userAPI";
 import { useDispatch } from "react-redux";
-import { addUserAC, setIsAuthAC } from "../../store/userReducer";
+import { addUserAC, setIsAdminAC, setIsAuthAC } from "../../store/userReducer";
 
 const LogIn = () => {
   const [password, setPassword] = useState("");
@@ -21,10 +21,13 @@ const LogIn = () => {
   const click = async (event) => {
     event.preventDefault();
     try {
-      let user;
-      user = await login(email, password);
+      const user = await login(email, password);
       dispatch(setIsAuthAC(true))
+      if(user.role==='ADMIN'){
+        dispatch(setIsAdminAC(true))
+      }
       navigate(CATALOG_ROUTE)
+      
     } catch (error) {
       alert(error.response.data.message);
     }

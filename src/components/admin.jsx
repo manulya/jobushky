@@ -1,41 +1,162 @@
-import React from "react";
-import { Dropdown } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { Alert, Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Header from "./Header/header";
+import Header from "./header";
+import { createCompany } from "../http/companyAPI";
+import { addCompanyAC } from "../store/companyReducer";
+import { addJobAC } from "../store/jobReducer";
+import { createJob } from "../http/jobAPI";
 
 export const Admin = () => {
-const companies=useSelector((state)=>state.companies.companies)
-  return (<div>
-    <Header/>
-    <Container>
-       
-      <CompanyInputForm>
-        <h1>Добавление компании</h1>
-        <CompanyNameInput placeholder="Введите название"></CompanyNameInput>
-        <CompanyDecriptionInput placeholder="Введите описание"></CompanyDecriptionInput>
-        <CompanyLogo placeholder="Выберите файл" type="file"></CompanyLogo>
-        <CompanyButton type="submit">Добавить</CompanyButton>
-      </CompanyInputForm>
+  const companies = useSelector((state) => state.companies.companies);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [img, setImg] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [nameJob, setNameJob] = useState("");
+  const [descriptionJob, setDescriptionJob] = useState("");
+  const [companyJob, setCompanyJob] = useState(null);
+  const [salaryJob, setSalaryJob] = useState("");
+  const [cityJob, setCityJob] = useState("");
+  const [showAlertJob, setShowAlertJob] = useState(false);
+  const [companyName, setCompanyName] = useState('Выберите компанию');
+  const dispatch = useDispatch();
 
-      <JobInputForm>
-        <h1>Добавление вакансии</h1>
-        <JobTitle placeholder="Введите название"></JobTitle>
-        <Description placeholder="Введите описание"></Description>
-        <Dropdown>
-            <Dropdown.Toggle style={{background:'white', color:'grey', borderRadius:"10px"}}>Выберите компанию</Dropdown.Toggle>
-            <Dropdown.Menu >
-            {companies.map(company=>
-            <Dropdown.Item key={company.id}> 
-            {company.companyName}
-            </Dropdown.Item>)}
+  const click = async (event) => {
+    try {
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("img", img);
+
+      let data = await createCompany(formData);
+      dispatch(addCompanyAC(data));
+      setShowAlert(true);
+      setName("");
+      setDescription("");
+      setImg("");
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
+
+  const clickJob = (event) => {
+    try {
+      event.preventDefault();
+      const data = {
+        name: nameJob,
+        description: descriptionJob,
+        salary: salaryJob,
+        city: cityJob,
+        companyId: companyJob,
+      };
+      console.log(data)
+      const response =  createJob(data);
+      dispatch(addJobAC(response));
+      setShowAlertJob(true);
+      setNameJob("");
+      setDescriptionJob("");
+      setCompanyJob(null);
+      setSalaryJob("");
+      setCityJob("");
+      setCompanyName('Выберите компанию');
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
+
+  return (
+    <div>
+      <Header />
+      <Container>
+        <CompanyInputForm onSubmit={click} enctype="multipart/form-data">
+          <h1>Добавление компании</h1>
+          <CompanyNameInput
+            placeholder="Введите название"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+          <CompanyDecriptionInput
+            placeholder="Введите описание"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <CompanyLogo
+            placeholder="Выберите файл"
+            type="file"
+            name="img"
+            onChange={(event) => setImg(event.target.files[0])}
+          />
+          <CompanyButton type="submit">Добавить</CompanyButton>
+          {showAlert && (
+            <Alert
+              variant="success"
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
+              <Alert.Heading>Компания успешно добавлена!</Alert.Heading>
+            </Alert>
+          )}
+        </CompanyInputForm>
+
+        <JobInputForm onSubmit={clickJob} enctype="multipart/form-data">
+          <h1>Добавление вакансии</h1>
+          <JobTitle
+            placeholder="Введите название"
+            value={nameJob}
+            onChange={(event) => setNameJob(event.target.value)}
+          ></JobTitle>
+          <Description
+            placeholder="Введите описание"
+            value={descriptionJob}
+            onChange={(event) => setDescriptionJob(event.target.value)}
+          ></Description>
+          <Dropdown>
+            <Dropdown.Toggle
+              style={{
+                background: "white",
+                color: "grey",
+                borderRadius: "10px",
+              }}
+            >
+              {companyName}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {companies.map((company, index) => (
+                <Dropdown.Item
+                key={index} onClick={()=>{setCompanyJob(company.id)
+                setCompanyName(company.name) }}
+                >
+                  {company.name}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
-        </Dropdown>
-        <Description placeholder="Введите зарплату" type="number"></Description>
-        <Location placeholder="Введите город"></Location>
-        <JobButton type="submit">Добавить</JobButton>
-      </JobInputForm>
-    </Container>
+          </Dropdown>
+          <Description
+            placeholder="Введите зарплату"
+            type="number"
+            value={salaryJob}
+            onChange={(event) => setSalaryJob(event.target.value)}
+          ></Description>
+          <Location
+            placeholder="Введите город"
+            value={cityJob}
+            onChange={(event) => setCityJob(event.target.value)}
+          ></Location>
+          <JobButton type="submit">Добавить</JobButton>
+          {showAlertJob && (
+            <Alert
+              variant="success"
+              onClose={() => setShowAlertJob(false)}
+              dismissible
+            >
+              <Alert.Heading>Вакасия успешно добавлена!</Alert.Heading>
+            </Alert>
+          )}
+        </JobInputForm>
+      </Container>
     </div>
   );
 };

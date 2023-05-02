@@ -1,14 +1,37 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { Alert, Spinner } from "react-bootstrap";
+import { addRequestAC } from "../store/requestReducer";
+import { createRequest } from "../http/requestAPI";
 
 function Job(props) {
+
   const { id, name, description, img } = props.company;
   const jobId = props.id;
   const setActive = props.setActive;
   const jobs = useSelector((state) => state.jobs.jobs);
   const jobItem = jobs.filter((j) => j.id === jobId);
+  const userid = localStorage.getItem("userId");
+  const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = useState(false);
 
+  if (!jobs || jobs.length === 0 || !jobItem || jobItem.length === 0) {
+    return <Spinner />;
+  }
+  
+  const handleApply =  () => {
+    try {
+      dispatch(createRequest(userid, jobItem[0].id))
+      console.log(showAlert)
+           
+    } catch (error) {
+      console.log(error);
+    }
+    setShowAlert(true);
+  };
+
+  
   return (
     <JobPopUp onClick={() => setActive()}>
       <Content onClick={(e) => e.stopPropagation()}>
@@ -24,7 +47,17 @@ function Job(props) {
           <Salary>Salary: {jobItem[0].salary}</Salary>
           <City>Location: {jobItem[0].city}</City>
           <Description>{jobItem[0].description}</Description>
-          <JobButton>Отправить заявку</JobButton>
+          
+          <JobButton onClick={handleApply}>Отправить заявку</JobButton>
+          {showAlert && (
+            <Alert
+              variant="success"
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
+              <Alert.Heading>Заявка успешно отправлена!</Alert.Heading>
+            </Alert>
+          )}
         </About>
       </Content>
     </JobPopUp>

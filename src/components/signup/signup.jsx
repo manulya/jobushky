@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.svg";
 import pct from "../../img/log.svg";
 import msg from "../../img/message.svg";
 import pdlck from "../../img/padlock.svg";
 import user from "../../img/user.svg";
-import { LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
+import { CATALOG_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
 import { registration } from "../../http/userAPI";
 import { useDispatch } from "react-redux";
-import { addUserAC, setIsAuthAC } from "../../store/userReducer";
+import { addUserAC, setIsAdminAC, setIsAuthAC } from "../../store/userReducer";
 
 const SignUp = () => {
   const [password, setPassword] = useState("");
@@ -17,6 +17,7 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState("");
   const [email, setEmail] = useState("");
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const click = async () => {
   try {
@@ -24,6 +25,10 @@ const SignUp = () => {
       data = await registration(email,password);
       dispatch(addUserAC(data))
       dispatch(setIsAuthAC(true))
+      if(data.role==='ADMIN'){
+        dispatch(setIsAdminAC(true))
+      }
+      navigate(CATALOG_ROUTE)
   } catch (error) {
     alert(error.response.data.message)
   }
