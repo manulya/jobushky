@@ -12,14 +12,13 @@ export const getOneJob = async()=>{
     return data
 }
 
-export const fetchJobs = (name, companyId, city) => {
+export const fetchJobs = (name, companyId, city,sortOrder) => {
     return async (dispatch) => {
       try {
           const {data} = await $host.get(`/api/job/`, {params: {
-            name, companyId, city
+            name, companyId, city, sortOrder
         }
     })
-    console.log(data)
           dispatch(fetchJobsAC(data.jobs))
           dispatch(setFoundAC(data.found))
       } catch (error) {

@@ -24,7 +24,7 @@ const Vacancy = (props) => {
       <CompanyName>{company[0].name}</CompanyName>
       <City>{city}</City>
       <JobButton onClick={() => clickHandler()}>Подробнее</JobButton>
-       {popUp && <Job key={key} id={id} company={company[0]} setActive={setPopUp} />}
+       {popUp && <Job key={id} id={id} company={company[0]} setActive={setPopUp} />}
     </VacancyContainer>
   );
 };

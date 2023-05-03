@@ -10,15 +10,16 @@ import { deleteRequest, fetchRequests } from "../http/requestAPI";
 
 const Requests = () => {
     const userid=localStorage.getItem("userId");
+    const requests=useSelector((state)=>state.requests.requests)
+    const companies=useSelector((state)=>state.companies.companies);
+    const jobs=useSelector((state)=>state.jobs.jobs);
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchJobs());
         dispatch(fetchCompanies())
         dispatch(fetchRequests(userid))
       }, [dispatch, userid]);
-    const requests=useSelector((state)=>state.requests.requests)
-  const companies=useSelector((state)=>state.companies.companies);
-  const jobs=useSelector((state)=>state.jobs.jobs);
+
 
 
 const handleDelete=(id)=>{
@@ -28,7 +29,8 @@ const handleDelete=(id)=>{
   return (
     <>
     <Header/>
-    <RequestsContainer>
+    {requests.length===0 ? (<Empty>Вы ещё не отправили ни одной заявки</Empty>):
+   (<RequestsContainer>
         
       <RequestsHeader>На эти вакансии вы отправили заявки</RequestsHeader>
       <JobsContainer>
@@ -47,7 +49,8 @@ const handleDelete=(id)=>{
           );
         })}
       </JobsContainer>
-    </RequestsContainer>
+    </RequestsContainer>)
+}
     </>
   );
 };
@@ -59,11 +62,15 @@ const RequestsContainer = styled.div`
   align-items: center;
 `;
 
+
 const RequestsHeader = styled.h2`
+margin-top: 5%;
   font-size: 24px;
   text-align: center;
 `;
-
+const Empty = styled(RequestsHeader)`
+    
+`
 const JobsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;

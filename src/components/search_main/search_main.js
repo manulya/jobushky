@@ -7,6 +7,7 @@ import "./search_main.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCompanyAC } from "../../store/companyReducer";
 import { fetchCompanies } from "../../http/companyAPI";
+import { Dropdown } from "react-bootstrap";
 
 const Search_main = (props) => {
   const dispatch = useDispatch();
@@ -16,21 +17,27 @@ const Search_main = (props) => {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [selectedJobName, setselectedJobName] = useState("");
   const [selectedCity, setselectedCity] = useState("");
-  
+  const [selectedSearch, setSelectedSearch]=useState("")
+  let selected=[]
+  let search=""
   
   const handlerReset = () => {
     setSelectedCompany("");
     setselectedJobName("");
     setselectedCity("");
     setSelectedCompanyId("")
-    const selected=[]
-    props.onSearch(selected)
+    selected=[]
+    props.onSearch(selected,search)
     
   };
   const handlerSearch =  () => {
-    console.log(selectedCompanyId)
-    const selected=[selectedJobName, selectedCompanyId, selectedCity]
-    props.onSearch(selected)
+    selected=[selectedJobName, selectedCompanyId, selectedCity]
+    props.onSearch(selected, search)
+  };
+  const handlerSort =  (params) => {
+    selected=[selectedJobName, selectedCompanyId, selectedCity]
+    const search=params
+    props.onSearch(selected,search)
   };
   return (
     <section className="intro">
@@ -154,10 +161,22 @@ const Search_main = (props) => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-between align-items-center mt-4">
-                    <p className="mb-0" style={{ color: "#939597" }}>
-                      <span className="text-pink font-weight-bold">108 </span>
-                      результатов
-                    </p>
+                  <Dropdown style={{ display:'flex', alignSelf:'center'}}>
+          <Dropdown.Toggle id="dropdown-basic" style={{
+                 backgroundColor: 'pink', backgroundImage: 'linear-gradient(to right, pink,#a38495)' ,
+                color: "white",
+                borderRadius: "10px",
+              }}>
+            Сортировать по
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu >
+            <Dropdown.Item onClick={()=>handlerSort("dd")}>Дате добавления: сначала новые</Dropdown.Item>
+            <Dropdown.Item onClick={()=>handlerSort("du")}>Дате добавления: сначала старые</Dropdown.Item>
+            <Dropdown.Item onClick={()=>handlerSort("su")}>Возрастанию зарплаты</Dropdown.Item>
+            <Dropdown.Item onClick={()=>handlerSort("sd")}>Убыванию зарплаты</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
                     <div>
                       <button
                         onClick={handlerReset}
