@@ -17,7 +17,6 @@ export const login = async (login, password) => {
   const decodedToken = jwtDecode(data.token);
   const userId = decodedToken.id;
   localStorage.setItem("userId", userId);
-  console.log("log", localStorage)
   return jwtDecode(data.token);
 };
 
@@ -26,7 +25,7 @@ export const check = async () => {
   if (token) {
     const { data } = await $authHost.get("/api/user/auth", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     });
     return data;

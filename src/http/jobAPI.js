@@ -2,6 +2,7 @@ import { addJobAC, fetchJobsAC, setFoundAC } from "../store/jobReducer";
 import { $authHost, $host } from "./index";
 
 export const createJob = async({name, description, salary, city, companyId})=>{
+    console.log(name, description, salary, city, companyId)
     const {data} = await $authHost.post('/api/job/', {name, description, salary, city, companyId})
     return data
 }

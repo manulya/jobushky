@@ -3,7 +3,7 @@ import { $authHost, $host } from "./index";
 
 
 export const createCompany = async(formData) => {
-    const {data} = await $host.post('/api/company', formData, {
+    const {data} = await $authHost.post('/api/company', formData, {
       headers: {
         'Content-Type': 'multipart/form-data', 
       }

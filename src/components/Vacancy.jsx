@@ -1,22 +1,29 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Job from "./job";
-import {useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
+import { createView, fetchView } from "../http/skillsAPI";
 
 const Vacancy = (props) => {
-  const {id,name, description, salary, city, companyid}=props.vacancy
-  const key=props.key
+  const { id, name, description, salary, city, companyid } = props.vacancy;
   const [popUp, setPopUp] = useState(false);
-  const companies=useSelector((state)=>state.companies.companies);
-  const company = companies.filter((c)=>c.id===companyid)
- 
+  const companies = useSelector((state) => state.companies.companies);
+  const company = companies.filter((c) => c.id === companyid);
+
   const clickHandler = () => {
     setPopUp(!popUp);
   };
-  if(!companies || companies.length === 0 || !company || company.length === 0){
-   return <Spinner/>
-      }
+
+  if (
+    !companies ||
+    companies.length === 0 ||
+    !company ||
+    company.length === 0
+  ) {
+
+    return <Spinner />;
+  }
 
   return (
     <VacancyContainer>
@@ -24,7 +31,9 @@ const Vacancy = (props) => {
       <CompanyName>{company[0].name}</CompanyName>
       <City>{city}</City>
       <JobButton onClick={() => clickHandler()}>Подробнее</JobButton>
-       {popUp && <Job key={id} id={id} company={company[0]} setActive={setPopUp} />}
+      {popUp && (
+        <Job key={id} id={id} company={company[0]} setActive={setPopUp} />
+      )}
     </VacancyContainer>
   );
 };

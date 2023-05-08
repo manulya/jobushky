@@ -4,17 +4,27 @@ import styled from "styled-components";
 import { Alert, Spinner } from "react-bootstrap";
 import { addRequestAC } from "../store/requestReducer";
 import { createRequest } from "../http/requestAPI";
+import { createView, fetchSkills } from "../http/skillsAPI";
 
 function Job(props) {
 
   const { id, name, description, img } = props.company;
   const jobId = props.id;
+  const allSkills = useSelector(state=>state.jobs.skills)
+const skills = allSkills.filter((skill)=>skill.job_id ===jobId)
   const setActive = props.setActive;
   const jobs = useSelector((state) => state.jobs.jobs);
   const jobItem = jobs.filter((j) => j.id === jobId);
   const userid = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchSkills(jobId));
+  }, [
+    jobId,dispatch
+  ]);
+
 
   if (!jobs || jobs.length === 0 || !jobItem || jobItem.length === 0) {
     return <Spinner />;
@@ -23,8 +33,7 @@ function Job(props) {
   const handleApply =  () => {
     try {
       dispatch(createRequest(userid, jobItem[0].id))
-      console.log(showAlert)
-           
+        
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +56,14 @@ function Job(props) {
           <Salary>Salary: {jobItem[0].salary}</Salary>
           <City>Location: {jobItem[0].city}</City>
           <Description>{jobItem[0].description}</Description>
+          {skills.length?<h6>Требуемые навки</h6>:<h6>Без дополнительных навыков</h6>}
+          {skills.map(skill => (
+            <Skills>
+             {skill.name} {skill.level}
+             </Skills>
+          ))}
           
+
           <JobButton onClick={handleApply}>Отправить заявку</JobButton>
           {showAlert && (
             <Alert
@@ -82,7 +98,7 @@ const Content = styled.div`
   background-color: white;
   border-radius: 20px;
   width: 500px;
-  height: 500px;
+  height: max-content;
 `;
 
 const ButtonClose = styled.span`
@@ -166,6 +182,11 @@ const Description = styled.div`
   font-size: 16px;
   color: #333333;
   margin-top: 5px;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   text-align: center;
 `;
+
+const Skills = styled(Description)`
+margin-top: 10px;
+  margin-bottom: 10px;
+`
