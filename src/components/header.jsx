@@ -28,7 +28,7 @@ const logOut =()=>{
           {users.isAdmin ?
         (<NavLink to={ADMIN_ROUTE}><Admin>Админ</Admin></NavLink>)
         :
-        (<NavLink to={REQUEST_ROUTE}><Request>Заявки</Request></NavLink>)
+        (<NavLink to={REQUEST_ROUTE}><Request>Избранное</Request></NavLink>)
           }
         <NavLink to={LOGIN_ROUTE}><Signin onClick={()=>logOut()}>Выйти</Signin></NavLink>
         </section>)

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { check } from "./http/userAPI";
 import { setIsAuthAC } from "./store/userReducer";
 import { Spinner } from "react-bootstrap";
 
 
 function App() {
-  const users=useSelector((state)=>state.users)
+ 
   const [loading, setLoading]=useState(true)
   const dispatch=useDispatch()
 

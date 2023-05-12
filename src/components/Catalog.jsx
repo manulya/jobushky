@@ -17,6 +17,7 @@ const Catalog = () => {
   const dispatch = useDispatch();
   const [searchResult, setSearchResult] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
+  const [jobCount, setJobCount] = useState(0);
 
   const handleSearch = (search,sort) => {
     setSearchResult(search);
@@ -24,6 +25,7 @@ const Catalog = () => {
   };
 
   useEffect(() => {
+    setJobCount(vacancies.length)
     dispatch(fetchJobs(searchResult[0], searchResult[1], searchResult[2], sortOrder));
     dispatch(fetchCompanies());
   }, [
@@ -32,14 +34,15 @@ const Catalog = () => {
     searchResult[1],
     searchResult[2],
     setSearchResult,
-    sortOrder
+    sortOrder,
+    [vacancies]
   ]);
 
   return (
     <Container>
       <Header />
       <SearchContainer>
-        <Search_main onSearch={handleSearch} />
+        <Search_main onSearch={handleSearch} jobCount={jobCount} />
       </SearchContainer>
       {!found ? (
         <Nothing>Ничего не найдено :(</Nothing>

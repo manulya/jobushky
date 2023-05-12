@@ -29,10 +29,10 @@ const handleDelete=(id)=>{
   return (
     <>
     <Header/>
-    {requests.length===0 ? (<Empty>Вы ещё не отправили ни одной заявки</Empty>):
+    {requests.length===0 ? (<Empty>Вы ещё не добавили ни одной заявки в избранное</Empty>):
    (<RequestsContainer>
         
-      <RequestsHeader>На эти вакансии вы отправили заявки</RequestsHeader>
+      <RequestsHeader>Эти вакансии вы добавили в избранное</RequestsHeader>
       <JobsContainer>
         {requests.map((request, index) => {
           const job = jobs.find((job) => job.id == request.jobid);
@@ -44,13 +44,15 @@ const handleDelete=(id)=>{
               <JobTitle>{job.name}</JobTitle>
               <CompanyName>{company.name}</CompanyName>
               <City>{job.city}</City>
-              <JobButton onClick={() => handleDelete(request.id)}>Отменить заявку</JobButton>
+              <JobButton onClick={() => handleDelete(request.id)}>Отправить заявку</JobButton><JobButton onClick={() => handleDelete(request.id)}>Удалить из избранного</JobButton>
             </VacancyContainer>
+            
           );
         })}
       </JobsContainer>
     </RequestsContainer>)
 }
+
     </>
   );
 };
@@ -114,7 +116,7 @@ const JobButton = styled.button`
   background-color: #9c27b0;
   background-image: linear-gradient(to bottom, #9c27b0, #7b1fa2);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   border: none;
   border-radius: 10px;

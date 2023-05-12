@@ -10,6 +10,7 @@ import { CATALOG_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/const
 import { login } from "../../http/userAPI";
 import { useDispatch } from "react-redux";
 import { addUserAC, setIsAdminAC, setIsAuthAC } from "../../store/userReducer";
+import DOMPurify from 'dompurify';
 
 const LogIn = () => {
   const [password, setPassword] = useState("");
@@ -21,7 +22,9 @@ const LogIn = () => {
   const click = async (event) => {
     event.preventDefault();
     try {
-      const user = await login(email, password);
+      const sanitizedEmail = DOMPurify.sanitize(email);
+      const sanitizedPassword = DOMPurify.sanitize(password);
+      const user = await login(sanitizedEmail, sanitizedPassword);
       dispatch(setIsAuthAC(true))
       if(user.role==='ADMIN'){
         dispatch(setIsAdminAC(true))

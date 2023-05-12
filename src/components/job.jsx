@@ -5,6 +5,7 @@ import { Alert, Spinner } from "react-bootstrap";
 import { addRequestAC } from "../store/requestReducer";
 import { createRequest } from "../http/requestAPI";
 import { createView, fetchSkills } from "../http/skillsAPI";
+import DownloadButton from "./download";
 
 function Job(props) {
 
@@ -64,16 +65,18 @@ const skills = allSkills.filter((skill)=>skill.job_id ===jobId)
           ))}
           
 
-          <JobButton onClick={handleApply}>Отправить заявку</JobButton>
+          <JobButton onClick={handleApply}>Добавить в избранное</JobButton>
           {showAlert && (
             <Alert
               variant="success"
               onClose={() => setShowAlert(false)}
               dismissible
             >
-              <Alert.Heading>Заявка успешно отправлена!</Alert.Heading>
+              
+              <Alert.Heading>Вакансия успешно добавлена в избранное!</Alert.Heading>
             </Alert>
           )}
+          <DownloadButton jobData={jobItem[0]}/>
         </About>
       </Content>
     </JobPopUp>

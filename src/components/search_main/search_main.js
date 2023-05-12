@@ -20,6 +20,7 @@ const Search_main = (props) => {
   const [selectedSearch, setSelectedSearch]=useState("")
   let selected=[]
   let search=""
+  let jobCount=props.jobCount
   
   const handlerReset = () => {
     setSelectedCompany("");
@@ -48,12 +49,19 @@ const Search_main = (props) => {
              
               <div className="card" style={{ backgroundColor: "#edeaea" }}>
                 <div className="card-body p-4">
-                  <h6
+                  <h5
                     className="text-uppercase mt-3 mb-4"
                     style={{ color: "#A38495" }}
                   >
                     Расширенный поиск
+                  </h5>
+                  <h6
+                    className="text-uppercase mt-3 mb-4"
+                    style={{ color: "#A38495" }}
+                  >
+                   Найдено {jobCount} вакансий
                   </h6>
+                  
                   <div className="row">
                     <div className="col-md-4 mb-3">
                       <div className="dropdown">
