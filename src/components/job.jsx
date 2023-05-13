@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Alert, Spinner } from "react-bootstrap";
-import { addRequestAC } from "../store/requestReducer";
 import { createRequest } from "../http/requestAPI";
-import { createView, fetchSkills } from "../http/skillsAPI";
+import {fetchSkills } from "../http/skillsAPI";
 import DownloadButton from "./download";
 
 function Job(props) {

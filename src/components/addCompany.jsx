@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { createCompany } from "../http/companyAPI";
-import { addCompanyAC } from "../store/companyReducer";
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -22,7 +21,7 @@ const AddCompany=()=> {
           formData.append("img", img);
     
           let data = await createCompany(formData);
-          dispatch(addCompanyAC(data));
+
           setShowAlert(true);
           setName("");
           setDescription("");

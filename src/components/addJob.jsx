@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addJobAC } from '../store/jobReducer';
 import { createJob } from '../http/jobAPI';
 import { Alert, Dropdown } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -26,8 +25,6 @@ const AddJob=()=> {
         companyId: companyJob,
       };
       const response = createJob(data);
-      console.log("response",response)
-      dispatch(addJobAC(response));
       setShowAlertJob(true);
       setNameJob("");
       setDescriptionJob("");

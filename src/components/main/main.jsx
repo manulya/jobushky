@@ -12,6 +12,8 @@ import 'mdb-ui-kit/css/mdb.min.css';
 import 'mdb-ui-kit/js/mdb.min.js';
 import { Button } from "bootstrap";
 import { CATALOG_ROUTE } from "../../utils/consts";
+import  { ChartPie } from "../pieChart";
+
 
 export const Main = () => {
   return (
@@ -21,6 +23,9 @@ export const Main = () => {
         <TextH1>Найдите работу прямо сейчас!</TextH1>
         <NavLink to={CATALOG_ROUTE}><CatalogBtn>Перейти в каталог</CatalogBtn></NavLink>
         <MainImg1 src={main1} />
+        <ChartWrapper>
+        <ChartPie/>
+        </ChartWrapper>
       </MainContent>
       <Footer />
     </Container>
@@ -60,9 +65,11 @@ const TextH1 = styled.text`
   color: #000000;
 `;
 const CatalogBtn = styled.button`
-grid-column: 1 / 2;
+grid-column: 1 /span 2;
+position: relative;
   justify-self: center;
 align-items: center;
+top: -100px;
    background-color: #9c27b0;
   background-image: linear-gradient(to bottom, #9c27b0, #7b1fa2);
   color: white;
@@ -77,3 +84,11 @@ align-items: center;
     background-color:  #f2eefa;
 }
 `
+const ChartWrapper = styled.div`
+  grid-column: 1 / span 2;
+  position: relative;
+  justify-self: center;
+  align-items: center;
+  top: -50%;  
+   left:-23%;
+`;

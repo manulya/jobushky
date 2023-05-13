@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addJobAC, addSkillsAC } from '../store/jobReducer';
-import { createJob } from '../http/jobAPI';
 import { Alert, Dropdown } from 'react-bootstrap';
 import styled from 'styled-components';
 import { createSkill } from '../http/skillsAPI';
@@ -20,7 +18,7 @@ const AddSkills=()=> {
   const dispatch = useDispatch();
 
   const handleCompanySelect = (company) => {
-    console.log(company,jobs)
+    
     setCompanyID(company.id);
     setCompanyName(company.name);
     setCompanyJob(jobs.filter((job) => job.companyid === company.id));
@@ -41,7 +39,7 @@ const AddSkills=()=> {
        job_id:skillJob
       };
       const response = createSkill(data);
-      dispatch(addSkillsAC(response));
+  
       setShowAlertJob(true);
       } catch (error) {
       alert(error.response.data.message);
@@ -108,7 +106,7 @@ const AddSkills=()=> {
               onClose={() => setShowAlertJob(false)}
               dismissible
             >
-              <Alert.Heading>Вакасия успешно добавлена!</Alert.Heading>
+              <Alert.Heading>Навык успешно добавлен!</Alert.Heading>
             </Alert>
           )}
         </JobInputForm>
@@ -130,10 +128,6 @@ const CompanyNameInput = styled.input`
   background-color: #ffffff;
   border: none;
   border-radius: 10px;
-`;
-const CompanyDecriptionInput = styled(CompanyNameInput)``;
-const CompanyLogo = styled.input`
-  margin: 20px 0px 0px 115px;
 `;
 
 const CompanyButton = styled.button`
@@ -157,5 +151,5 @@ const CompanyButton = styled.button`
 const JobInputForm = styled(CompanyInputForm)``;
 const JobTitle = styled(CompanyNameInput)``;
 const Description = styled(CompanyNameInput)``;
-const Location = styled(CompanyNameInput)``;
+
 const JobButton = styled(CompanyButton)``;
