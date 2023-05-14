@@ -18,7 +18,13 @@ let defaultState ={
           case FETCH_SENDED:
               return{...state,sended:action.payload}     
               case UPDATE_SENDED:
-                return{...state,sended:action.payload}     
+                const updatedSended = state.sended.map((item) => {
+                  if (item.id === action.payload.id) {
+                    return { ...item, ...action.payload };
+                  }
+                  return item;
+                });
+                return { ...state, sended: updatedSended };
           default:
                 return state
 

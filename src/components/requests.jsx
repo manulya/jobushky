@@ -10,6 +10,7 @@ import { deleteRequest, fetchRequests } from "../http/requestAPI";
 import { useNavigate } from "react-router-dom";
 import { SENDED_ROUTE } from "../utils/consts";
 import { createSended } from "../http/sendedAPI";
+import DOMPurify from 'dompurify';
 
 const Requests = () => {
   const userid = localStorage.getItem("userId");
@@ -28,12 +29,12 @@ const Requests = () => {
   const handleApply = (job_id,index) => {
     try {
       const user_id=userid
-      const message=sendMessage[index];
+      const message = DOMPurify.sanitize(sendMessage[index]);
       dispatch(createSended(user_id, job_id, message));
       setSendMessage(prevState => {
         const updatedSendMessage = [...prevState];
-        updatedSendMessage[index] = "";
-        return updatedSendMessage;
+  updatedSendMessage[index] = message;
+  return updatedSendMessage;
       });
     } catch (error) {
       console.log(error);
@@ -44,7 +45,6 @@ const Requests = () => {
   const handleDelete = (id) => {
     dispatch(deleteRequest(id));
   };
-  const handleSendMessage = (id) => {};
   const handleSend = (id) => {
     navigate(SENDED_ROUTE);
   };
@@ -88,7 +88,7 @@ const Requests = () => {
 
                     ></Message>
                   </MessageForm>
-                  <JobButton onClick={() => handleApply(request.jobid)}>
+                  <JobButton onClick={() => handleApply(request.jobid, index)}>
                     Отправить заявку
                   </JobButton>
                   <JobButton onClick={() => handleDelete(request.id)}>

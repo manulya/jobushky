@@ -17,7 +17,6 @@ export const createSended = async(user_id,job_id, message) => {
         }
        
     });
-    console.log(data)
         dispatch(fetchSendedAC(data));
       } catch (error) {
         console.log(error);
@@ -26,10 +25,12 @@ export const createSended = async(user_id,job_id, message) => {
   };
  
   export const updateSended = ( id, message ) => {
+    console.log(id,message)
     return async (dispatch) => {
       try {
-        await $authHost.put(`/api/send/`,{ id, message });
-        // dispatch(updateAC());
+        const {data} = await $authHost.put(`/api/send/`,{ id, message });
+        console.log(data)
+        dispatch(updateAC(data));
       } catch (error) {
         console.log(error);
       }
