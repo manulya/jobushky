@@ -10,40 +10,39 @@ import { CATALOG_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
 import { registration } from "../../http/userAPI";
 import { useDispatch } from "react-redux";
 import { addUserAC, setIsAdminAC, setIsAuthAC } from "../../store/userReducer";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
+import Header from "../header";
 
 const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [email, setEmail] = useState("");
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const click = async () => {
-  try {
-      let data
+    try {
+      let data;
       const sanitizedEmail = DOMPurify.sanitize(email);
       const sanitizedPassword = DOMPurify.sanitize(password);
-      data = await registration(sanitizedEmail,sanitizedPassword);
-      dispatch(addUserAC(data))
-      dispatch(setIsAuthAC(true))
-      if(data.role==='ADMIN'){
-        dispatch(setIsAdminAC(true))
+      data = await registration(sanitizedEmail, sanitizedPassword);
+      dispatch(addUserAC(data));
+      dispatch(setIsAuthAC(true));
+      if (data.role === "ADMIN") {
+        dispatch(setIsAdminAC(true));
       }
-      navigate(CATALOG_ROUTE)
-  } catch (error) {
-    alert(error.response.data.message)
-  }
-};
-
-
+      navigate(CATALOG_ROUTE);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
 
   const handlerForSubmit = (event) => {
     event.preventDefault();
     password !== confirmPassword
       ? setPasswordError("Пароли не совпадают")
-      : click()
+      : click();
   };
 
   const handlePasswordChange = (event) => {
@@ -57,9 +56,7 @@ const SignUp = () => {
 
   return (
     <div>
-      <NavLink to={MAIN_ROUTE}>
-        <Logo src={logo} />
-      </NavLink>
+      <Header />
       <WrapperLog>
         <FirstDiv>
           <Text1>Зарегестрироваться</Text1>
@@ -110,9 +107,7 @@ const SignUp = () => {
             />
           </PasswordConfSection>
           {passwordError && <Error>{passwordError}</Error>}
-          <LogBtn type="submit">
-            Зарегистрироваться
-          </LogBtn>
+          <LogBtn type="submit">Зарегистрироваться</LogBtn>
         </SecondDiv>
       </WrapperLog>
       <WrapperImg>
@@ -133,20 +128,20 @@ const Logo = styled.img`
 `;
 const WrapperImg = styled.div`
   position: absolute;
-  width: 695px;
-  height: 859px;
-  left: 723px;
-  top: 21px;
+  width: 495px;
+  height: 559px;
+  left: 823px;
+  top: 121px;
 
   background: #000842;
   border-radius: 15px;
 `;
 const LogImg = styled.img`
   position: relative;
-  width: 492.65px;
+  width: 462.65px;
   height: 521px;
-  left: 120px;
-  top: 85px;
+  left: 20px;
+  top: 0px;
 `;
 const WrapperLog = styled.div`
   /* position: absolute; */
@@ -207,7 +202,7 @@ const LogBtn = styled.button`
   height: 53px;
   position: absolute;
   left: 124px;
-  top: 750px;
+  top: 650px;
   box-shadow: 0px 4px 26px 0px rgba(0, 0, 0, 0.25);
   color: #ffffff;
   text-align: center;

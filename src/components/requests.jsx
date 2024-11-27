@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Job from "./job";
 import { useDispatch, useSelector } from "react-redux";
-import { Spinner } from "react-bootstrap";
 import { fetchJobs } from "../http/jobAPI";
 import { fetchCompanies } from "../http/companyAPI";
 import Header from "./header";
@@ -10,7 +9,8 @@ import { deleteRequest, fetchRequests } from "../http/requestAPI";
 import { useNavigate } from "react-router-dom";
 import { SENDED_ROUTE } from "../utils/consts";
 import { createSended } from "../http/sendedAPI";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
+import { Alert } from "react-bootstrap";
 
 const Requests = () => {
   const userid = localStorage.getItem("userId");
@@ -20,26 +20,32 @@ const Requests = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [sendMessage, setSendMessage] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
     dispatch(fetchJobs());
     dispatch(fetchCompanies());
     dispatch(fetchRequests(userid));
   }, [dispatch, userid]);
 
-  const handleApply = (job_id,index) => {
+  const handleApply = (job_id, index) => {
     try {
-      const user_id=userid
+      const user_id = userid;
       const message = DOMPurify.sanitize(sendMessage[index]);
       dispatch(createSended(user_id, job_id, message));
-      setSendMessage(prevState => {
+      setSendMessage((prevState) => {
         const updatedSendMessage = [...prevState];
-  updatedSendMessage[index] = message;
-  return updatedSendMessage;
+        updatedSendMessage[index] = message;
+        return updatedSendMessage;
       });
+      
+    
     } catch (error) {
       console.log(error);
     }
-
+    dispatch(fetchJobs());
+      dispatch(fetchCompanies());
+      dispatch(fetchRequests(userid));
+    setShowAlert(true);
   };
 
   const handleDelete = (id) => {
@@ -52,19 +58,17 @@ const Requests = () => {
   return (
     <>
       <Header />
-      <SendedButton onClick={() => handleSend()}>
-        Отправленные заявки
-      </SendedButton>
+      <SendedButton onClick={() => handleSend()}>Заказанные книги</SendedButton>
       {requests.length === 0 ? (
         <EmptyContainer>
-          <Empty>Вы ещё не добавили ни одной заявки в избранное</Empty>
+          <Empty>Вы ещё не добавили ни одной книги в корзину</Empty>
           <SendedButton onClick={() => handleSend()}>
-            Отправленные заявки
+            Заказанные книги
           </SendedButton>
         </EmptyContainer>
       ) : (
         <RequestsContainer>
-          <RequestsHeader>Эти вакансии вы добавили в избранное</RequestsHeader>
+          <RequestsHeader>Эти книги вы добавили в корзину</RequestsHeader>
           <JobsContainer>
             {requests.map((request, index) => {
               const job = jobs.find((job) => job.id == request.jobid);
@@ -78,22 +82,32 @@ const Requests = () => {
                   <City>{job.city}</City>
                   <MessageForm>
                     <Message
-                      placeholder="Ваше сопроводительное"
+                      placeholder="Укажите адресс"
                       value={sendMessage[index]}
                       onChange={(event) => {
                         const updatedSendMessage = [...sendMessage];
                         updatedSendMessage[index] = event.target.value;
                         setSendMessage(updatedSendMessage);
                       }}
-
                     ></Message>
                   </MessageForm>
                   <JobButton onClick={() => handleApply(request.jobid, index)}>
-                    Отправить заявку
+                    Заказать книгу
                   </JobButton>
-                  <JobButton onClick={() => handleDelete(request.id)}>
-                    Удалить из избранного
-                  </JobButton>
+                  <DeleteButton onClick={() => handleDelete(request.id)}>
+                    Удалить из корзины
+                  </DeleteButton>
+                  {showAlert && (
+                    <Alert
+                      variant="success"
+                      onClose={() => setShowAlert(false)}
+                      dismissible
+                    >
+                      <Alert.Heading>
+                        Книга успешно добавлена в избранное!
+                      </Alert.Heading>
+                    </Alert>
+                  )}
                 </VacancyContainer>
               );
             })}
@@ -157,8 +171,8 @@ const CompanyName = styled.div`
   color: #333333;
 `;
 const JobButton = styled.button`
-  background-color: #9c27b0;
-  background-image: linear-gradient(to bottom, #9c27b0, #7b1fa2);
+  background-color: #45da3f;
+  background-image: linear-gradient(to bottom, #45da3f, #1c6a10);
   color: white;
   font-size: 0.9rem;
   font-weight: 400;
@@ -168,8 +182,28 @@ const JobButton = styled.button`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   margin-top: 10px;
+  width: 200px;
   :hover {
-    background-color: #9c27b0;
+    background-color: #1c5d1a;
+    color: #f2eefa;
+  }
+`;
+
+const DeleteButton = styled.button`
+  /* background-color: #881717d9; */
+  background-image: linear-gradient(to bottom, #c9240e81, #8d0f0fe1);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 400;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 10px;
+  width: 200px;
+  :hover {
+    background-color: #881717d9;
     color: #f2eefa;
   }
 `;

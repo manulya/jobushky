@@ -8,7 +8,7 @@ import { fetchCompanies } from "../http/companyAPI";
 import Header from "./header";
 import { useNavigate } from "react-router-dom";
 import { fetchSended, updateSended } from "../http/sendedAPI";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 
 const Sended = () => {
   const userid = localStorage.getItem("userId");
@@ -25,20 +25,20 @@ const Sended = () => {
     dispatch(fetchSended(userid));
   }, [dispatch, userid]);
 
-  const handleSend = (job_id,index) => {
-    const message=DOMPurify.sanitize(sendMessage[index])
-dispatch(updateSended(job_id,message))
-setWriteMsg((prevWriteMsg) => ({ ...prevWriteMsg, [index]: false }));
+  const handleSend = (job_id, index) => {
+    const message = DOMPurify.sanitize(sendMessage[index]);
+    dispatch(updateSended(job_id, message));
+    setWriteMsg((prevWriteMsg) => ({ ...prevWriteMsg, [index]: false }));
   };
 
   return (
     <>
       <Header />
       {sended.length === 0 ? (
-        <Empty>Вы ещё не отправили ни одной заявки</Empty>
+        <Empty>Вы ещё не заказали ни одной книги</Empty>
       ) : (
         <RequestsContainer>
-          <RequestsHeader>Отправленные заявки</RequestsHeader>
+          <RequestsHeader>Заказанные книги</RequestsHeader>
           <JobsContainer>
             {sended.map((sendedItem, index) => {
               const job = jobs.find((job) => job.id == sendedItem.job_id);
@@ -50,10 +50,10 @@ setWriteMsg((prevWriteMsg) => ({ ...prevWriteMsg, [index]: false }));
                   <JobTitle>{job.name}</JobTitle>
                   <CompanyName>{company.name}</CompanyName>
                   <City>{job.city}</City>
-                  {writeMsg[index]===true ? (
+                  {writeMsg[index] === true ? (
                     <MessageForm>
                       <MessageInput
-                        placeholder="Ваше сопроводительное"
+                        placeholder="Ваш адрес"
                         value={sendMessage[index]}
                         onChange={(event) => {
                           const newMessage = { ...sendMessage };
@@ -61,18 +61,22 @@ setWriteMsg((prevWriteMsg) => ({ ...prevWriteMsg, [index]: false }));
                           setSendMessage(newMessage);
                         }}
                       ></MessageInput>
-                      
                     </MessageForm>
                   ) : (
-                    <Message onClick={() => {
-                      setWriteMsg((prevWriteMsg) => ({ ...prevWriteMsg, [index]: true }))
-                    }}>
+                    <Message
+                      onClick={() => {
+                        setWriteMsg((prevWriteMsg) => ({
+                          ...prevWriteMsg,
+                          [index]: true,
+                        }));
+                      }}
+                    >
                       {sendedItem.message}
                     </Message>
                   )}
 
                   <JobButton onClick={() => handleSend(sendedItem.id, index)}>
-                    Изменить заявку
+                    Изменить адрес
                   </JobButton>
                 </VacancyContainer>
               );

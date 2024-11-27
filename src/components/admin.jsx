@@ -12,9 +12,10 @@ export const Admin = () => {
     <div>
       <Header />
       <Container>
+      <AddJob/>
         <AddCompany/>
-        <AddJob/>
-        <AddSkills/>
+   
+        {/* <AddSkills/> */}
       </Container>
     </div>
   );

@@ -19,14 +19,16 @@ const Catalog = () => {
   const [sortOrder, setSortOrder] = useState("");
   const [jobCount, setJobCount] = useState(0);
 
-  const handleSearch = (search,sort) => {
+  const handleSearch = (search, sort) => {
     setSearchResult(search);
     setSortOrder(sort);
   };
 
   useEffect(() => {
-    setJobCount(vacancies.length)
-    dispatch(fetchJobs(searchResult[0], searchResult[1], searchResult[2], sortOrder));
+    setJobCount(vacancies.length);
+    dispatch(
+      fetchJobs(searchResult[0], searchResult[1], searchResult[2], sortOrder)
+    );
     dispatch(fetchCompanies());
   }, [
     dispatch,
@@ -35,7 +37,7 @@ const Catalog = () => {
     searchResult[2],
     setSearchResult,
     sortOrder,
-    [vacancies]
+    [vacancies],
   ]);
 
   return (
@@ -60,9 +62,9 @@ const Catalog = () => {
 export default Catalog;
 
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: auto 0.8fr 2fr;
-  min-height: 120vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 `;
 const Nothing = styled.h1`
   align-self: center;
@@ -71,11 +73,12 @@ const Nothing = styled.h1`
 
 const VacanciesContainer = styled.div`
   display: grid;
+  width: 90vw;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   grid-gap: 50px;
   justify-items: center;
-  margin-top: 15%;
+  margin: 100px auto 0px;
 `;
 const SearchContainer = styled.div`
-  margin-top: -100px;
+  margin-top: 50px;
 `;

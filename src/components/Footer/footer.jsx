@@ -1,105 +1,114 @@
-import React from "react"
-import styled from "styled-components"
+import React from "react";
+import styled from "styled-components";
 
-const FooterWrapper=styled.section`
-  position: absolute;
-width: 198px;
-height: 110px;
-left: 629px;
-bottom:-300px;
-`
-const Separator=styled.div`
-position: absolute;
-height: 2px;
-width: 1072px;
-left: -484px;
+const FooterWrapper = styled.footer`
+  background-color: #f9f9f9;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 2px solid #ebeef2;
+`;
 
-bottom: 130%;
+const Separator = styled.div`
+  width: 100%;
+  height: 2px;
+  background-color: #ebeef2;
+  margin-bottom: 20px;
+`;
 
-background: #EBEEF2;
-border-radius: 0px;
-transform: matrix(1, 0, 0, -1, 0, 0);
-`
-const Cont = styled.text`
-position: absolute;
-left: 18.69%;
-right: 27.27%;
-top: 0%;
-bottom: 87.27%;
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  flex-wrap: wrap;
+`;
 
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 14px;
-/* identical to box height, or 100% */
+const Section = styled.div`
+  margin: 10px 20px;
+  text-align: center;
 
-letter-spacing: 1.4px;
-text-transform: uppercase;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 10px 0;
+  }
+`;
 
-color: #657085;
-`
-const Links=styled.text`
-  position: absolute;
-left: 0%;
-right: 9.6%;
-top: 35.45%;
-bottom: 43.64%;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height, or 140% */
-color: #1C202B;
-`
-const Mail=styled.a`
-  position: absolute;
-left: 10%;
-right: 9.6%;
-top: 35.45%;
-bottom: 43.64%;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height, or 140% */
-text-decoration: none;
-color: #1C202B;
-`
+const Title = styled.h4`
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #1c202b;
+  margin-bottom: 10px;
+`;
 
-const Git=styled.text`
-  position: absolute;
-left: 20%;
-right: 0%;
-top: 79.09%;
-bottom: 0%;
-margin-top: 25px;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 22px;
-/* identical to box height, or 140% */
+const Link = styled.a`
+  display: block;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: #657085;
+  text-decoration: none;
+  margin: 5px 0;
 
+  &:hover {
+    color: #9c27b0;
+    text-decoration: underline;
+  }
+`;
 
-color: #1C202B;
-`
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+`;
 
+const SocialIcon = styled.a`
+  width: 24px;
+  height: 24px;
+  background-color: #ebeef2;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1c202b;
+  font-size: 16px;
+  text-decoration: none;
 
-const Footer =()=>{
-    return(
-<FooterWrapper>
-        <Separator/>
-        <Cont>CONTACT US</Cont>
-        <Links>
-          <Mail href="mailto:ylianadans@gmail.com">ylianadans@gmail.com</Mail>
-          <Git>github: manulia</Git>
-        </Links>
-      </FooterWrapper>
-    );
-}
+  &:hover {
+    background-color: #9c27b0;
+    color: white;
+  }
+`;
+
+const FooterNote = styled.p`
+  margin-top: 20px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  color: #657085;
+`;
+
+const Footer = () => {
+  return (
+    <FooterWrapper>
+      <Separator />
+      <ContentWrapper>
+        <Section>
+          <Title>Контакты</Title>
+          <Link href="mailto:info@bookstore.com">info@bookstore.com</Link>
+          <Link href="tel:+123456789">+1 (234) 567-89</Link>
+        </Section>
+        <Section>
+          <Title>Информация</Title>
+          <Link href="/about">О нас</Link>
+          <Link href="/privacy">Политика конфиденциальности</Link>
+          <Link href="/terms">Условия использования</Link>
+        </Section>
+       
+      </ContentWrapper>
+      <FooterNote>© 2024 Bookery. Все права защищены.</FooterNote>
+    </FooterWrapper>
+  );
+};
 
 export default Footer;
-

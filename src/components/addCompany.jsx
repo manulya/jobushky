@@ -1,68 +1,59 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { createCompany } from "../http/companyAPI";
-import { useDispatch, useSelector } from 'react-redux';
-import { Alert } from 'react-bootstrap';
-import styled from 'styled-components';
+import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "react-bootstrap";
+import styled from "styled-components";
 
-const AddCompany=()=> {
-
+const AddCompany = () => {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [img, setImg] = useState("");
+
   const [showAlert, setShowAlert] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const click = async (event) => {
-        try {
-          event.preventDefault();
-          let formData = new FormData();
-          formData.append("name", name);
-          formData.append("description", description);
-          formData.append("img", img);
-    
-          let data = await createCompany(formData);
+  const click = async (event) => {
+    try {
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append("name", name);
+      // formData.append("description", description);
+      // formData.append("img", img);
 
-          setShowAlert(true);
-          setName("");
-          setDescription("");
-          setImg("");
-        } catch (error) {
-          alert(error.response.data.message);
-        }
-      };
+      let data = await createCompany(formData);
+
+      setShowAlert(true);
+      setName("");
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
 
   return (
     <CompanyInputForm onSubmit={click} enctype="multipart/form-data">
-    <h1>Добавление компании</h1>
-    <CompanyNameInput
-      placeholder="Введите название"
-      value={name}
-      onChange={(event) => setName(event.target.value)}
-    />
-    <CompanyDecriptionInput
+      <h1>Добавление автора</h1>
+      <CompanyNameInput
+        placeholder="Введите автора"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+      />
+      {/* <CompanyDecriptionInput
       placeholder="Введите описание"
       value={description}
       onChange={(event) => setDescription(event.target.value)}
-    />
-    <CompanyLogo
-      placeholder="Выберите файл"
-      type="file"
-      name="img"
-      onChange={(event) => setImg(event.target.files[0])}
-    />
-    <CompanyButton type="submit">Добавить</CompanyButton>
-    {showAlert && (
-      <Alert
-        variant="success"
-        onClose={() => setShowAlert(false)}
-        dismissible
-      >
-        <Alert.Heading>Компания успешно добавлена!</Alert.Heading>
-      </Alert>
-    )}
-  </CompanyInputForm>
-  )
-}
+    /> */}
+
+      <CompanyButton type="submit">Добавить</CompanyButton>
+      {showAlert && (
+        <Alert
+          variant="success"
+          onClose={() => setShowAlert(false)}
+          dismissible
+        >
+          <Alert.Heading>Компания успешно добавлена!</Alert.Heading>
+        </Alert>
+      )}
+    </CompanyInputForm>
+  );
+};
 export default AddCompany;
 
 const CompanyInputForm = styled.form`

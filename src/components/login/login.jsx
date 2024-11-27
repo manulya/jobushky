@@ -6,18 +6,22 @@ import pct from "../../img/log.svg";
 import msg from "../../img/message.svg";
 import pdlck from "../../img/padlock.svg";
 import google from "../../img/google.svg";
-import { CATALOG_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
+import {
+  CATALOG_ROUTE,
+  MAIN_ROUTE,
+  REGISTRATION_ROUTE,
+} from "../../utils/consts";
 import { login } from "../../http/userAPI";
 import { useDispatch } from "react-redux";
 import { addUserAC, setIsAdminAC, setIsAuthAC } from "../../store/userReducer";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
+import Header from "../header";
 
 const LogIn = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const click = async (event) => {
     event.preventDefault();
@@ -25,12 +29,11 @@ const LogIn = () => {
       const sanitizedEmail = DOMPurify.sanitize(email);
       const sanitizedPassword = DOMPurify.sanitize(password);
       const user = await login(sanitizedEmail, sanitizedPassword);
-      dispatch(setIsAuthAC(true))
-      if(user.role==='ADMIN'){
-        dispatch(setIsAdminAC(true))
+      dispatch(setIsAuthAC(true));
+      if (user.role === "ADMIN") {
+        dispatch(setIsAdminAC(true));
       }
-      navigate(CATALOG_ROUTE)
-      
+      navigate(CATALOG_ROUTE);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -38,9 +41,7 @@ const LogIn = () => {
 
   return (
     <div>
-      <NavLink to={MAIN_ROUTE}>
-        <Logo src={logo} />
-      </NavLink>
+      <Header/>
       <WrapperLog>
         <FirstDiv>
           <Text1>Войти</Text1>
@@ -73,7 +74,9 @@ const LogIn = () => {
               onChange={(event) => setPassword(event.target.value)}
             ></PasswordInput>
           </PasswordSection>
-          <LogBtn type="submit" onClick={(event)=>click(event)}>Войти</LogBtn>
+          <LogBtn type="submit" onClick={(event) => click(event)}>
+            Войти
+          </LogBtn>
         </SecondDiv>
       </WrapperLog>
       <WrapperImg>
@@ -94,20 +97,20 @@ const Logo = styled.img`
 `;
 const WrapperImg = styled.div`
   position: absolute;
-  width: 695px;
-  height: 859px;
-  left: 723px;
-  top: 21px;
+  width: 495px;
+  height: 559px;
+  left: 823px;
+  top: 121px;
 
   background: #000842;
   border-radius: 15px;
 `;
 const LogImg = styled.img`
   position: relative;
-  width: 492.65px;
+  width: 462.65px;
   height: 521px;
-  left: 120px;
-  top: 85px;
+  left:20px;
+  top: 0px;
 `;
 const WrapperLog = styled.div`
   width: 431px;
